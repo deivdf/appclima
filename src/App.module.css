@@ -14,6 +14,7 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    margin-bottom: 2rem;
 }
 .form input[type="text"], .form select{
     border-radius: 1rem;
@@ -48,59 +49,17 @@
     color: var(--purple);
 }
 
-.form label, .files label{
-    font-size: 1.8rem;
-    font-weight: 400;
-    color: var(--white);
-    transition: all .3s ease;
-}
-.form label::after, .files label::after{
-    content: "";
-    display: block;
-    width: 0;
-    height: .2rem;
-    background-color: var(--purple);
-    transition: all .3s ease;
-}
+
 .form input[type="submit"]:hover{
     background-color: var(--white);
     color: var(--purple);
 }
-.form input[type="submit"]:focus{
-    outline: none;
-    border: .2rem solid var(--purple);
-}
-.form input[type="submit"]:focus::placeholder{
-    color: var(--purple);
-}
-.form input[type="submit"]:focus + label{
-    color: var(--purple);
-}
-.form input[type="submit"]:focus + label::after{
-    width: 100%;
-}
+
 .form label{
     font-size: 1.8rem;
-    font-weight: 4
+    font-weight: 4;
 }
 
-.img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.img-container{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.img-container img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
 .card{
     width: 100%;
     height: 100%;
@@ -115,16 +74,7 @@
     background-color: #474747;
     transition: all 0.3s ease;
 }
-.selectpais{
-    width: 100%;
-    height: 4rem;
-    border-radius: 0.2rem;
-    border: 1px solid #ccc;
-    padding: 0 1rem;
-    font-size: 1.5rem;
-    outline: none;
-    margin-bottom: 4rem;
-}
+
 @media screen and (min-width: 768px) {
     .container{
         display: grid;

@@ -5,7 +5,7 @@ import { countries } from '../data/countris'
 import Alert from '../alert/Alert';
 
 type FormProps = {
-  feachWeather: () => void;
+  feachWeather: (search: SearchType) => Promise<void>
 }
 function Form( {feachWeather}: FormProps) {
   const [search, setSearch] = useState<SearchType>({
@@ -24,10 +24,13 @@ function Form( {feachWeather}: FormProps) {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if(Object.values(search).includes('')){
+      setTimeout(() => {
+        setAlert('')
+      }, 2000);
       setAlert('Todos los campos son obligatorios')
       return
     }
-    feachWeather();
+    feachWeather(search);
   }
 
   return (
@@ -46,7 +49,7 @@ function Form( {feachWeather}: FormProps) {
             placeholder="Ingresa una ciudad..."/>
         </div>
           <div className={styles.files}>
-            <label htmlFor="city">Pais:</label>
+            <label htmlFor="country">Pais:</label>
             <select className={styles.selectpais}
               value={search.country} name="country" id="country"
               onChange={handleChange}
