@@ -1,9 +1,11 @@
 import styles from "../src/App.module.css"
+import Alert from "./alert/Alert"
 import CardComponent from "./cards/CardComponent"
 import Form from "./forms/Form"
 import useWeather from "./hooks/useWeather"
 function App() {
-  const { loading, weather,feachWeather, hasWeaterData } = useWeather()
+  const { loading,nofund, weather,feachWeather, hasWeaterData } = useWeather()
+  
   return (
     <>
       <h1 className={styles.title}>Buscador de Clima</h1>
@@ -22,6 +24,7 @@ function App() {
             weather={weather}
           />
         </div>}
+          {nofund && <Alert>ciudad no encontrada</Alert>}
       </div>
     </>
   )

@@ -47,6 +47,10 @@ export type Weather = InferOutput<typeof WeatherSchema>
 export default function useWeather() {
     const [loading, setLoading] = useState(false)
     const [weather, setWeather] = useState<Weather>(initialState)
+    const [nofund, setNofund] = useState(false)
+    setTimeout(() => {
+        setNofund(false)
+    },3000)
     const feachWeather = async (search: SearchType) =>{
         const apikey = import.meta.env.VITE_API_KEY
         setLoading(true)
@@ -54,6 +58,10 @@ export default function useWeather() {
         try{
             const geoUrl= `http://api.openweathermap.org/geo/1.0/direct?q=${search.city},${search.country}&appid=${apikey}`
             const {data} = await axios(geoUrl)
+            if(!data[0]){
+                setNofund(true)
+                return
+            }
             const lat = data[0].lat
             const lon = data[0].lon
             const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apikey}&units=metric`
@@ -95,6 +103,7 @@ export default function useWeather() {
     const hasWeaterData = useMemo(()=> weather.name, [weather])
     return{
         loading,
+        nofund,
         hasWeaterData,
         weather,
         feachWeather
