@@ -2,7 +2,7 @@ import axios from "axios"
 import { SearchType } from "../types"
 // import { z } from "zod"
 import { number, object, string, InferOutput, parse, optional} from 'valibot'
-import { useState } from "react"
+import { useMemo, useState } from "react"
 // function isWeatherResponse(weather: unknown): weather is Weather {
 //     return(
 //         //tipar lo resultados devuelotos por la api y validar que sea un objeto con un boleano
@@ -35,18 +35,22 @@ const WeatherSchema = object({
         temp_max: number()
     })
 })
-type Weather = InferOutput<typeof WeatherSchema>
+const initialState = {
+    name: '',
+    main: {
+        temp: 0,
+        temp_min: 0,
+        temp_max: 0
+    }
+}
+export type Weather = InferOutput<typeof WeatherSchema>
 export default function useWeather() {
-    const [weather, setWeather] = useState<Weather>({
-        name: '',
-        main: {
-            temp: 0,
-            temp_min: 0,
-            temp_max: 0
-        }
-    })
+    const [loading, setLoading] = useState(false)
+    const [weather, setWeather] = useState<Weather>(initialState)
     const feachWeather = async (search: SearchType) =>{
         const apikey = import.meta.env.VITE_API_KEY
+        setLoading(true)
+        setWeather(initialState)
         try{
             const geoUrl= `http://api.openweathermap.org/geo/1.0/direct?q=${search.city},${search.country}&appid=${apikey}`
             const {data} = await axios(geoUrl)
@@ -84,9 +88,15 @@ export default function useWeather() {
             
         }catch (error){
             alert(error)
+        }finally{
+            setLoading(false)
         }
     }
+    const hasWeaterData = useMemo(()=> weather.name, [weather])
     return{
+        loading,
+        hasWeaterData,
+        weather,
         feachWeather
     }
 }

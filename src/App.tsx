@@ -1,8 +1,9 @@
 import styles from "../src/App.module.css"
+import CardComponent from "./cards/CardComponent"
 import Form from "./forms/Form"
 import useWeather from "./hooks/useWeather"
 function App() {
-  const { feachWeather } = useWeather()
+  const { loading, weather,feachWeather, hasWeaterData } = useWeather()
   return (
     <>
       <h1 className={styles.title}>Buscador de Clima</h1>
@@ -12,10 +13,15 @@ function App() {
             feachWeather={feachWeather}
           />
         </div>
-        <div className={styles.card}>
-          <h2>Ciudad</h2>
-          <p>Temperatura: </p>
-        </div>
+        {loading && <div className={styles.spinner}>
+  <div className={styles["double-bounce1"]}></div>
+  <div className={styles["double-bounce2"]}></div>
+</div>}
+        {hasWeaterData && <div className={styles.card}>
+          <CardComponent 
+            weather={weather}
+          />
+        </div>}
       </div>
     </>
   )
